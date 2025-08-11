@@ -46,7 +46,7 @@ print(data.describe())
 
 # %%
 # Line plot for stock prices
-fig=plt.figure(figsize=(12, 6))
+plt.figure(figsize=(12, 6))
 plt.plot(data['Date'], data['Close'], label='Close Price')
 plt.plot(data['Date'], data['MA_20'], label='MA 20',linestyle='--')
 plt.plot(data['Date'], data['MA_50'], label='MA 50',linestyle='--')
@@ -54,15 +54,15 @@ plt.title('Coca-Cola Stock Prices with Moving Averages')
 plt.xlabel('Date')
 plt.ylabel('Price')
 plt.legend()
-st.pyplt(fig)
+st.pyplt(plt)
  
 
 # %%
 # Correlation heatmap
-fig_corr=plt.figure(figsize=(10, 8))
+plt.figure(figsize=(10, 8))
 sns.heatmap(data.corr(), annot=True, cmap='coolwarm')
 plt.title('Correlation Heatmap')
-st.pyplt(fig_corr)
+st.pyplt(plt)
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -112,5 +112,6 @@ live_data.fillna(0, inplace=True)
 latest_features = live_data[features].iloc[-1:].dropna()
 live_prediction = model.predict(latest_features)
 print(f"Predicted Closing Price: {live_prediction[0]}")
+
 
 
