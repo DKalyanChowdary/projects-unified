@@ -54,7 +54,7 @@ plt.title('Coca-Cola Stock Prices with Moving Averages')
 plt.xlabel('Date')
 plt.ylabel('Price')
 plt.legend()
-st.pyplt(fig)
+st.pyplot(fig)
  
 
 # %%
@@ -62,7 +62,7 @@ st.pyplt(fig)
 fig_corr=plt.figure(figsize=(10, 8))
 sns.heatmap(data.corr(), annot=True, cmap='coolwarm')
 plt.title('Correlation Heatmap')
-st.pyplt(fig_corr)
+st.pyplot(fig_corr)
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -112,6 +112,7 @@ live_data.fillna(0, inplace=True)
 latest_features = live_data[features].iloc[-1:].dropna()
 live_prediction = model.predict(latest_features)
 print(f"Predicted Closing Price: {live_prediction[0]}")
+
 
 
 
