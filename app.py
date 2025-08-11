@@ -3,7 +3,7 @@ import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import streamlit as st
 # %%
 ticker = 'KO' # Coca-Cola stock ticker
 data = yf.download(ticker, start='2015-01-01', end='2023-12-31', actions=True)
@@ -112,6 +112,7 @@ live_data.fillna(0, inplace=True)
 latest_features = live_data[features].iloc[-1:].dropna()
 live_prediction = model.predict(latest_features)
 print(f"Predicted Closing Price: {live_prediction[0]}")
+
 
 
 
