@@ -207,21 +207,6 @@ col1.metric(label="Mean Squared Error (MSE)", value=f"{mse:.4f}")
 col2.metric(label="Mean Absolute Error (MAE)", value=f"{mae:.4f}")
 
 # %%
- # Fetch latest stock data
-live_data = yf.download(ticker, period='1d', interval='1m')
-
-# %%
-# Prepare live data for prediction
-live_data['MA_20'] =live_data['Close'].rolling(window=20).mean()
-live_data['MA_50'] =live_data['Close'].rolling(window=50).mean()
-live_data['Daily_Return'] = live_data['Close'].pct_change()
-live_data['Volatility'] =live_data['Daily_Return'].rolling(window=20).std()
-
-# %%
- # Ensure no missing values
-live_data.fillna(0, inplace=True)
-
-# %%
 st.header("Live Price Prediction")
 if st.button("Predict Latest Closing Price"):
     with st.spinner("Fetching data and predicting..."):
@@ -260,4 +245,5 @@ ax.grid(True)
 fig.tight_layout()
 
 st.pyplot(fig)
+
 
