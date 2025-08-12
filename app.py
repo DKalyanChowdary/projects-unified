@@ -14,9 +14,6 @@ plt.style.use("fivethirtyeight")
 # page configuration and titles
 st.set_page_config(page_title="Stock Analysis App", layout="wide")
 st.title("Interactive Stock Analysis and Prediction")
-# For reading stock data from yahoo
-from pandas_datareader.data import DataReader
-
 
 # %%
 ticker = 'KO' # Coca-Cola stock ticker
@@ -247,4 +244,5 @@ ax.set_ylabel('Close Price USD ($)', fontsize=16)
 ax.legend(fontsize=14)
 ax.grid(True)
 fig.tight_layout()
+
 st.pyplot(fig)
