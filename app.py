@@ -182,7 +182,7 @@ from sklearn.model_selection import train_test_split
 features = ['Open', 'High', 'Low', 'Volume', 'MA_20', 'MA_50', 'Daily_Return', 'Volatility']
 target = 'Close'
 X = data[features]
-y = data[[target]]
+y = data[target]
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2, random_state=42, shuffle=False)
 
@@ -191,6 +191,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error,mean_squared_error
  # Initialize the model
 model = RandomForestRegressor(n_estimators=100,random_state=42)
+st.write("The type of y_train is:", type(y_train))
  # Train the model
 model.fit(X_train, y_train.ravel())
 # Predict on test set
@@ -245,6 +246,7 @@ ax.grid(True)
 fig.tight_layout()
 
 st.pyplot(fig)
+
 
 
 
