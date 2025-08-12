@@ -78,8 +78,10 @@ st.pyplot(fig)
 
 # %%
 st.subheader("Stock Attributes Overview")
-fig_subplots = data.plot(subplots=True, figsize=(25, 20), layout=(-1, 2), sharex=False).get_figure()
-st.pyplot(fig_subplots)
+# First, create the plot. This implicitly creates a figure.
+data.plot(subplots=True, figsize=(25, 20), layout=(-1, 2), sharex=False)
+# Then, get the current figure that was just created and pass it to Streamlit
+st.pyplot(plt.gcf())
 
 # %%
 def plot_close_val(data_frame, column, stock):
@@ -258,3 +260,4 @@ ax.grid(True)
 fig.tight_layout()
 
 st.pyplot(fig)
+
