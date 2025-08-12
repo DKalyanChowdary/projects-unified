@@ -182,7 +182,7 @@ from sklearn.model_selection import train_test_split
 features = ['Open', 'High', 'Low', 'Volume', 'MA_20', 'MA_50', 'Daily_Return', 'Volatility']
 target = 'Close'
 X = data[features]
-y = data[target]
+y = data[[target]]
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2, random_state=42, shuffle=False)
 
@@ -245,5 +245,6 @@ ax.grid(True)
 fig.tight_layout()
 
 st.pyplot(fig)
+
 
 
