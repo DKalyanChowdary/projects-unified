@@ -68,7 +68,6 @@ ax.set_ylabel('Price')
 ax.legend()
 st.pyplot(fig)
 
-
 # %%
 # Correlation heatmap
 st.subheader("Correlation Heatmap")
@@ -133,12 +132,6 @@ vol.plot(ax=ax)
 ax.set_title(f"{min_periods}-Day Rolling Volatility")
 ax.set_xlabel("Date")
 ax.set_ylabel("Volatility")
-st.pyplot(fig)
-
-# %%
-st.subheader("Scatter Matrix of Daily Percentage Change")
-fig = plt.figure(figsize=(10, 10))
-pd.plotting.scatter_matrix(daily_pct_change, diagonal='kde', alpha=0.1, ax=fig.add_subplot(111))
 st.pyplot(fig)
 
 # %%
@@ -246,3 +239,4 @@ ax.grid(True)
 fig.tight_layout()
 
 st.pyplot(fig)
+
