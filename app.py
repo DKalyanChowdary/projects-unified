@@ -77,10 +77,9 @@ ax.set_title('Correlation Heatmap')
 st.pyplot(fig)
 
 # %%
-fig, ax = plt.subplots(figsize=(25, 12))
-data.plot(subplots=True, ax=ax, legend=True)
-fig.suptitle('Coca Cola Stock Attributes')
-st.pyplot(fig)
+st.subheader("Stock Attributes Overview")
+fig_subplots = data.plot(subplots=True, figsize=(25, 20), layout=(-1, 2), sharex=False).get_figure()
+st.pyplot(fig_subplots)
 
 # %%
 def plot_close_val(data_frame, column, stock):
@@ -191,7 +190,7 @@ from sklearn.metrics import mean_absolute_error,mean_squared_error
  # Initialize the model
 model = RandomForestRegressor(n_estimators=100,random_state=42)
  # Train the model
-model.fit(X_train, y_train)
+model.fit(X_train, y_train.ravel())
 # Predict on test set
 y_pred = model.predict(X_test)
 
@@ -199,9 +198,11 @@ y_pred = model.predict(X_test)
 # Evaluate model
 mse = mean_squared_error(y_test, y_pred)
 mae = mean_absolute_error(y_test, y_pred)
-#error value
-st.metric(f"Mean Squared Error: {mse}")
-st.metric(f"Mean Absolute Error: {mae}")
+# metrics in columns
+st.subheader("Model Performance Evaluation")
+col1, col2 = st.columns(2)
+col1.metric(label="Mean Squared Error (MSE)", value=f"{mse:.4f}")
+col2.metric(label="Mean Absolute Error (MAE)", value=f"{mae:.4f}")
 
 # %%
  # Fetch latest stock data
@@ -219,10 +220,28 @@ live_data['Volatility'] =live_data['Daily_Return'].rolling(window=20).std()
 live_data.fillna(0, inplace=True)
 
 # %%
-# Use the latest data point for prediction
-latest_features = live_data[features].iloc[-1:].dropna()
-live_prediction = model.predict(latest_features)
-print(f"Predicted Closing Price: {live_prediction[0]}")
+st.header("Live Price Prediction")
+if st.button("Predict Latest Closing Price"):
+    with st.spinner("Fetching data and predicting..."):
+        # Fetch latest stock data
+        live_data = yf.download(ticker, period='3mo', interval='1d') # Fetch more data for feature calculation
+        
+        # Prepare live data for prediction
+        live_data['MA_20'] = live_data['Close'].rolling(window=20).mean()
+        live_data['MA_50'] = live_data['Close'].rolling(window=50).mean()
+        live_data['Daily_Return'] = live_data['Close'].pct_change()
+        live_data['Volatility'] = live_data['Daily_Return'].rolling(window=20).std()
+        live_data.fillna(method='ffill', inplace=True)
+        live_data.fillna(0, inplace=True)
+        
+        # Use the latest data point for prediction
+        latest_features = live_data[features].iloc[-1:]
+        
+        if not latest_features.isnull().values.any():
+            live_prediction = model.predict(latest_features)
+            st.success(f"Predicted Closing Price for {ticker}: ${live_prediction[0]:.2f}")
+        else:
+            st.error("Could not generate a live prediction due to missing feature data.")
 
 # %%
 # Create a new pandas Series for the predictions with the correct index
@@ -239,4 +258,3 @@ ax.grid(True)
 fig.tight_layout()
 
 st.pyplot(fig)
-
