@@ -7,6 +7,7 @@ from math import sqrt
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import seaborn as sns
+from sklearn.model_selection import train_test_split 
 sns.set_style('whitegrid')
 plt.style.use("fivethirtyeight")
 
@@ -117,3 +118,4 @@ else:
                 st.success(f"Predicted Closing Price for {ticker}: ${live_prediction[0]:.2f}")
             else:
                 st.error("Could not generate a live prediction due to missing feature data.")
+
